@@ -1,7 +1,7 @@
 FROM alpine:latest
 LABEL maintainer "Kamalesh Giri <nerdlaunda@gmail.com>"
 
-
+RUN mkdir /root/.aws
 RUN apk update && apk add \
 	ca-certificates \
 	groff \
