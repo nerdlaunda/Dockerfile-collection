@@ -1,14 +1,21 @@
-FROM    stakater/base-alpine
-LABEL   authors="Hazim <hazim_malik@hotmail.com>"
+FROM alpine:latest
+LABEL maintainer "Kamalesh Giri <nerdlaunda@gmail.com>"
 
-RUN     apk -Uuv add groff less python py-pip && \
-        pip install awscli && \
-        apk --purge -v del py-pip && \
-        rm /var/cache/apk/*
 
-# Expose volume for AWS credentials
-VOLUME  ["/root/.aws"]
-# Expose the working directory
-VOLUME 	["/aws"]
+RUN apk update && apk add \
+	ca-certificates \
+	groff \
+	nano \
+	python3 \
+	jq \
+	py-pip \
+  	&& pip install pip --upgrade \
+  	&& pip install awscli \
+	&& rm -rf /var/cache/apk/* 
 
-WORKDIR "/aws"
+VOLUME /root/.aws
+
+WORKDIR "/data"
+
+# Autorun aws
+ENTRYPOINT ["aws"]
